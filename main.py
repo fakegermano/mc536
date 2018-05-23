@@ -34,24 +34,24 @@ class ConsultaFrame(Frame):
     def create_widgets(self):
         self.left = self.create_left()
         self.right = self.create_right()
-
-        self.left.grid(row=0, column=0)
-        self.right.grid(row=0, column=1, sticky='n')
+        self.left.grid(row=0, column=0, padx=15, pady=15)
+        self.right.grid(row=0, column=1, sticky='n', padx=30, pady=30)
 
     def create_left(self):
         left = Frame(self)
         self.model = StringVar()
         self.model.set('variadas')
         self.model.trace("w", self.update_combo)
+        Label(left, text="1º Selecione uma opção").grid(row=0, column=0)
         for i, opt in enumerate(MODEL_OPTIONS):
-            Radiobutton(left, text=opt[0], value=opt[1], variable=self.model).grid(row=i, column=0, sticky='w')
+            Radiobutton(left, text=opt[0], value=opt[1], variable=self.model).grid(row=i+1, column=0, sticky='w')
         return left
 
     def create_right(self):
         right = Frame(self)
         s = Style()
         s.configure('Sair.TButton', foreground="#f00")
-        Label(right, text="Por favor escolha a consulta a realizar").pack()
+        Label(right, text="2º por favor escolha a consulta").pack()
         self.query = StringVar()
         self.query.set('-------')
         self.box = Combobox(right, exportselection=True, justify='left', height=5,
@@ -81,7 +81,7 @@ class NovaFrame(Frame):
 
     def create_widgets(self):
         Label(self, text="Aqui vão as inserções").pack(side="top")
-
+        Button(self, text='Sair', command=root.destroy, style='Sair.TButton').pack(side="bottom")
 
 class Tabs(Notebook):
 
