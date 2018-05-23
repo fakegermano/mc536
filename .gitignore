@@ -1,3 +1,4 @@
 basic/*
 venv/*
 .idea/*
+__pycache__/*
