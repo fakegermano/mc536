@@ -56,9 +56,9 @@ class ConsultaFrame(Frame):
         self.query.set('-------')
         self.box = Combobox(right, exportselection=True, justify='left', height=5,
                             state='readonly', values=QUERY_OPTIONS[self.model.get()], textvariable=self.query)
-        self.box.pack(fill='x')
+        self.box.pack(fill='x', pady=20)
         Button(right, text='Pesquisar', command=self.search).pack()
-        Button(right, text='Sair', command=root.destroy, style='Sair.TButton').pack()
+        Button(right, text='Sair', command=root.destroy, style='Sair.TButton').pack(pady=20)
         return right
 
     def update_combo(self, *args):
@@ -100,9 +100,7 @@ class Tabs(Notebook):
 if __name__ == "__main__":
     root = ThemedTk()
     root.title("Consultas e Inserções")
-    root.maxsize(800, 600)
     root.set_theme('arc')
-
     note = Tabs(root)
     root.mainloop()
     exit()
