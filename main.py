@@ -1,27 +1,83 @@
-from tkinter import StringVar
+from tkinter import StringVar, Toplevel
+from tkinter.messagebox import showinfo
 
 from ttkthemes.themed_tk import *
 from tkinter.ttk import *
 
-MODEL_OPTIONS = [('ESTÁDIO', 'estadio'),
-                 ('PARTIDA', 'partida'),
-                 ('TIME DE FUTEBOL', 'time'),
-                 ('TÉCNICO', 'tecnico'),
-                 ('ÁRBITRO', 'arbitro'),
-                 ('JOGADOR', 'jogador'),
-                 ('TORCEDOR', 'torcedor'),
-                 ('COMENTARISTA', 'comentarista'),
-                 ('CONSULTAS VARIADAS', 'variadas')]
+MODEL_OPTIONS = {'estadio': 'ESTADIO',
+                 'partida': 'PARTIDA',
+                 'time': 'TIME DE FUTEBOL',
+                 'tecnico': 'TECNICO',
+                 'arbitro': 'ARBITRO',
+                 'jogador': 'JOGADOR',
+                 'torcedor': 'TORCEDOR',
+                 'comentarista': 'COMENTARISTA',
+                 'variadas': 'CONSULTAS VARIADAS'}
+ESTADIO_QUERY_TEXTS = ['Partidas realizadas neste estádio', 'Estádios participantes na Copa']
+ESTADIO_QUERY_CODES = ['E1', 'E2']
 
-QUERY_OPTIONS = {'estadio': [],
-                 'partida': [],
-                 'time': [],
-                 'tecnico': [],
-                 'arbitro': [],
-                 'jogador': [],
-                 'torcedor': [],
-                 'comentarista': ['Bla'],
-                 'variadas': ['Teste 1', 'Teste 2']}  # consultas variadas
+PARTIDA_QUERY_TEXTS = ['Estádio onde a partida foi realizada', 'Árbitros apitando a partida',
+                       'Comentaristas narrando a partida', 'Torcedors presentes na partida',
+                       'Times jogando a partida', 'Partidas realizadas na copa']
+PARTIDA_QUERY_CODES = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6']
+
+TIME_QUERY_TEXTS = ['Times contra quem o time jogou', 'Técnico do time',
+                    'Jogadores do time', 'Torcedores do time', 'Times participando da Copa']
+TIME_QUERY_CODES = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6']
+
+TECNICO_QUERY_TEXTS = ['Time que participa', 'Jogadores que treina']
+TECNICO_QUERY_CODES = ['C1', 'C2']
+
+ARBITRO_QUERY_TEXTS = ['Partidas que apitou', 'Árbitros na Copa']
+ARBITRO_QUERY_CODES = ['A1', 'A2']
+
+JOGADOR_QUERY_TEXTS = ['Time que participa', 'Técnico que o treina', 'Jogadores na Copa']
+JOGADOR_QUERY_CODES = ['J1', 'J2', 'J3']
+
+TORCEDOR_QUERY_TEXTS = ['Time que torce', 'Partidas que assistiu', 'Torcedores na Copa']
+TORCEDOR_QUERY_CODES = ['F1', 'F2', 'F3']
+
+COMENTARISTA_QUERY_TEXTS = ['Partidas que narrou', 'Comentaristas na Copa']
+COMENTARISTA_QUERY_CODES = ['N1', 'N2']
+
+VARIADAS_QUERY_TEXTS = ['Comentaristas que narraram em uma partidas em que o Brasil jogou',
+                        'Torcedores que não foram para nenhum jogo do Brasil',
+                        'Jogadores de defesa que não levaram nenhum cartão',
+                        'Partidas com mais de 2000 torcedores',
+                        'Estádio com menos que 2 partidas',
+                        'Em quais estádios árbitros brasileiros vão apitar uma partida',
+                        'Jogadores que levaram um ou mais cartões vermelhos',
+                        'Jogadores que fizeram 3 ou mais gols',
+                        'Estádio com capacidade inferior a 30000 pessoas',
+                        'Times cujos jogadores somam menos de 20 cartões amarelos',
+                        'Árbitro que foi mais de 3 vezes bandeirinha',
+                        'Árbitro que deu mais que 8 cartões vermelhos ou amarelos',
+                        'Comentaristas que narraram mais de 30 gols',
+                        'Torcedor que assistiu partidas que o camisa 10 do Brasil jogou',
+                        'Comentaristas que narraram partidas em que um dos times jogava com formação 4-4-3']
+VARIADAS_QUERY_CODES = ['#1', '#2', '#3', '#4', '#5',
+                        '#6', '#7', '#8', '#9', '#10',
+                        '#11', '#12', '#13', '#14', '#15']
+
+QUERY_OPTIONS = {'estadio': ESTADIO_QUERY_TEXTS,
+                 'partida': PARTIDA_QUERY_TEXTS,
+                 'time': TIME_QUERY_TEXTS,
+                 'tecnico': TECNICO_QUERY_TEXTS,
+                 'arbitro': ARBITRO_QUERY_TEXTS,
+                 'jogador': JOGADOR_QUERY_TEXTS,
+                 'torcedor': TORCEDOR_QUERY_TEXTS,
+                 'comentarista': COMENTARISTA_QUERY_TEXTS,
+                 'variadas': VARIADAS_QUERY_TEXTS}  # consultas variadas
+
+QUERY_OPTIONS_CODES = {'estadio': ESTADIO_QUERY_CODES,
+                       'partida': PARTIDA_QUERY_CODES,
+                       'time': TIME_QUERY_CODES,
+                       'tecnico': TECNICO_QUERY_CODES,
+                       'arbitro': ARBITRO_QUERY_CODES,
+                       'jogador': JOGADOR_QUERY_CODES,
+                       'torcedor': TORCEDOR_QUERY_CODES,
+                       'comentarista': COMENTARISTA_QUERY_CODES,
+                       'variadas': VARIADAS_QUERY_CODES}
 
 
 class ConsultaFrame(Frame):
@@ -43,8 +99,8 @@ class ConsultaFrame(Frame):
         self.model.set('variadas')
         self.model.trace("w", self.update_combo)
         Label(left, text="1º Selecione uma opção").grid(row=0, column=0)
-        for i, opt in enumerate(MODEL_OPTIONS):
-            Radiobutton(left, text=opt[0], value=opt[1], variable=self.model).grid(row=i+1, column=0, sticky='w')
+        for i, opt in enumerate([(k, v) for k, v in MODEL_OPTIONS.items()]):
+            Radiobutton(left, text=opt[1], value=opt[0], variable=self.model).grid(row=i+1, column=0, sticky='w')
         return left
 
     def create_right(self):
@@ -54,10 +110,11 @@ class ConsultaFrame(Frame):
         Label(right, text="2º por favor escolha a consulta").pack()
         self.query = StringVar()
         self.query.set('-------')
-        self.box = Combobox(right, exportselection=True, justify='left', height=5,
-                            state='readonly', values=QUERY_OPTIONS[self.model.get()], textvariable=self.query)
+        self.box = Combobox(right, exportselection=False, justify='left', height=8,
+                            state='readonly', values=QUERY_OPTIONS[self.model.get()],
+                            textvariable=self.query)
         self.box.pack(fill='x', pady=20)
-        Button(right, text='Pesquisar', command=self.search).pack()
+        Button(right, text='Avançar', command=self.get_info).pack()
         Button(right, text='Sair', command=root.destroy, style='Sair.TButton').pack(pady=20)
         return right
 
@@ -66,11 +123,27 @@ class ConsultaFrame(Frame):
         self.query.set('-------')
         self.box.pack()
 
-    def search(self):
+    def get_info(self):
         if self.query.get() == '-------':
             return
-        print(self.model.get())
-        print(self.query.get())
+
+        info = Toplevel()
+        info.title("Mais Informações")
+        frame = Frame(info)
+        query_code = QUERY_OPTIONS_CODES[self.model.get()][self.box.current()]
+        self.info = StringVar()
+        Label(frame, text="Código da Query: %s\tModelo Relacionado: %s"
+                          % (query_code, MODEL_OPTIONS[self.model.get()])).pack(pady=15, padx=5)
+        Label(frame, text="Informe as informações extra necessárias").pack(pady=5, padx=5)
+        Entry(frame, textvariable=self.info).pack(fill='x', padx=30)
+        Button(frame, text="Pesquisar", command=lambda: self.do_query(info, query_code)).pack(pady=15)
+
+        frame.pack()
+
+    def do_query(self, popup, qcode):
+
+        showinfo("Resultados", "Pesquisando query %s com atributo %s" % (qcode, self.info.get()))
+        popup.destroy()
 
 
 class NovaFrame(Frame):
@@ -80,8 +153,37 @@ class NovaFrame(Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        Label(self, text="Aqui vão as inserções").pack(side="top")
-        Button(self, text='Sair', command=root.destroy, style='Sair.TButton').pack(side="bottom")
+        Label(self, text="Selecione o que você quer inserir").pack(side="top", pady=15)
+        self.inputvalue = StringVar()
+        self.input = Combobox(self, exportselection=True,
+                              justify='left', height=6,
+                              state='readonly', values=list(MODEL_OPTIONS.values())[:-2],
+                              textvariable=self.inputvalue)
+        self.input.pack(fill='x', padx=15)
+        Button(self, text='Inserir', command=self.insert).pack()
+        Button(self, text='Atualizar', command=self.update).pack()
+        Button(self, text='Sair', command=root.destroy, style='Sair.TButton').pack(side="bottom", pady=15)
+
+    def insert(self):
+        insertwin = Toplevel()
+        insertwin.wm_title('Inserir')
+        insertframe = Frame(insertwin)
+        self.insertinfo = StringVar()
+        Label(insertframe, text="Coloque aqui informações extas").pack(padx=15, pady=15)
+        Entry(insertframe, textvariable=self.insertinfo).pack()
+        Button(insertframe, text="Salvar", command=insertwin.destroy).pack(pady=15)
+        insertframe.pack()
+
+    def update(self):
+        updatewin = Toplevel()
+        updatewin.wm_title('Atualizar')
+        updateframe = Frame(updatewin)
+        self.updateinfo = StringVar()
+        Label(updateframe, text="Coloque aqui informações extas").pack(padx=15, pady=15)
+        Entry(updateframe, textvariable=self.updateinfo).pack()
+        Button(updateframe, text="Salvar", command=updatewin.destroy).pack(pady=15)
+        updateframe.pack()
+
 
 class Tabs(Notebook):
 
