@@ -1,4 +1,4 @@
-from tkinter import StringVar, Toplevel
+from tkinter import StringVar, Toplevel, IntVar
 from tkinter.messagebox import showinfo
 
 from ttkthemes.themed_tk import *
@@ -167,30 +167,76 @@ class NovaFrame(Frame):
         Button(self, text='Atualizar', command=self.update).pack()
         Button(self, text='Sair', command=root.destroy, style='Sair.TButton').pack(side="bottom", pady=15)
 
+    def insert_torcedor(self, frame):
+        self.doc_id = IntVar()
+        self.doc_type = StringVar()
+        self.country = StringVar()
+        self.country_fan = StringVar()  # must be referencing a country in db
+        Label(frame, text="Inserindo um torcedor").pack(padx=15, pady=15)
+        innerframe = Frame(frame)
+        Label(innerframe, text="Numero do Documento").grid(row=0, column=0)
+        Entry(innerframe, textvariable=self.doc_id).grid(row=0, column=1)
+        Label(innerframe, text="Tipo de Documento").grid(row=1, column=0)
+        Entry(innerframe, textvariable=self.doc_type).grid(row=1, column=1)
+        Label(innerframe, text="País de origem").grid(row=2, column=0)
+        Entry(innerframe, textvariable=self.country).grid(row=2, column=1)
+        Label(innerframe, text="País que torce").grid(row=3, column=0)
+        Combobox(innerframe, exportselection=True, justify='center', height=6, state='readonly',
+                 values=self.get_countries(), textvariable=self.country_fan).grid(row=3, column=1)
+        innerframe.pack()
+
+    def insert_comentarista(self, frame):
+        self.doc_id = IntVar()
+        self.doc_type = StringVar()
+        self.country = StringVar()
+        self.language = StringVar()  # must be referencing a country in db
+        Label(frame, text="Inserindo um torcedor").pack(padx=15, pady=15)
+        innerframe = Frame(frame)
+        Label(innerframe, text="Numero do Documento").grid(row=0, column=0)
+        Entry(innerframe, textvariable=self.doc_id).grid(row=0, column=1)
+        Label(innerframe, text="Tipo de Documento").grid(row=1, column=0)
+        Entry(innerframe, textvariable=self.doc_type).grid(row=1, column=1)
+        Label(innerframe, text="País de origem").grid(row=2, column=0)
+        Entry(innerframe, textvariable=self.country).grid(row=2, column=1)
+        Label(innerframe, text="Língua").grid(row=3, column=0)
+        Entry(innerframe, textvariable=self.language).grid(row=3, column=1)
+        innerframe.pack()
+
+    def insert_arbitro(self, frame):
+        self.doc_id = IntVar()
+        self.doc_type = StringVar()
+        self.country = StringVar()
+        self.role = StringVar()  # must be referencing a country in db
+        Label(frame, text="Inserindo um torcedor").pack(padx=15, pady=15)
+        innerframe = Frame(frame)
+        Label(innerframe, text="Numero do Documento").grid(row=0, column=0)
+        Entry(innerframe, textvariable=self.doc_id).grid(row=0, column=1)
+        Label(innerframe, text="Tipo de Documento").grid(row=1, column=0)
+        Entry(innerframe, textvariable=self.doc_type).grid(row=1, column=1)
+        Label(innerframe, text="País de origem").grid(row=2, column=0)
+        Entry(innerframe, textvariable=self.country).grid(row=2, column=1)
+        Label(innerframe, text="Função").grid(row=3, column=0)
+        Entry(innerframe, textvariable=self.role).grid(row=3, column=1)
+        innerframe.pack()
+
     def insert(self):
         insertwin = Toplevel()
         insertwin.wm_title('Inserir')
         insertframe = Frame(insertwin)
         error = False
         if self.inputvalue.get() == MODEL_OPTIONS['torcedor']:
-            self.insertinfo = StringVar()
-            Label(insertframe, text="Inserindo um torcedor").pack(padx=15, pady=15)
-            Entry(insertframe, textvariable=self.insertinfo).pack()
+            self.insert_torcedor(insertframe)
         elif self.inputvalue.get() == MODEL_OPTIONS['comentarista']:
-            self.insertinfo = StringVar()
-            Label(insertframe, text="Inserindo um comentarista").pack(padx=15, pady=15)
-            Entry(insertframe, textvariable=self.insertinfo).pack()
+            self.insert_comentarista(insertframe)
         elif self.inputvalue.get() == MODEL_OPTIONS['arbitro']:
-            self.insertinfo = StringVar()
-            Label(insertframe, text="Inserindo um árbitro").pack(padx=15, pady=15)
-            Entry(insertframe, textvariable=self.insertinfo).pack()
+            self.insert_arbitro(insertframe)
         elif self.inputvalue.get() == MODEL_OPTIONS['time']:
             self.insertinfo = StringVar()
             Label(insertframe, text="Inserindo um time").pack(padx=15, pady=15)
             Entry(insertframe, textvariable=self.insertinfo).pack()
         elif self.inputvalue.get() == MODEL_OPTIONS['estadio']:
             self.insertinfo = StringVar()
-            Label(insertframe, text="Inserindo um árbitro").pack(padx=15, pady=15)
+            Label(insertframe, text="Inserindo um estádio").pack(padx=15, pady=15)
             Entry(insertframe, textvariable=self.insertinfo).pack()
         elif self.inputvalue.get() == MODEL_OPTIONS['tecnico']:
             self.insertinfo = StringVar()
@@ -229,6 +275,9 @@ class NovaFrame(Frame):
         else:
             Button(insertframe, text="Salvar", command=insertwin.destroy).pack(pady=15)
         insertframe.pack()
+
+    def get_countries(self):
+        return ['Brasil', 'Alemanha', 'Espanha']  # TODO: trocar por uma query no BD
 
     def update(self):
         updatewin = Toplevel()
