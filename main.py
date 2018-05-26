@@ -13,6 +13,7 @@ MODEL_OPTIONS = {'estadio': 'ESTADIO',
                  'torcedor': 'TORCEDOR',
                  'comentarista': 'COMENTARISTA',
                  'variadas': 'CONSULTAS VARIADAS'}
+
 ESTADIO_QUERY_TEXTS = ['Partidas realizadas neste estádio', 'Estádios participantes na Copa']
 ESTADIO_QUERY_CODES = ['E1', 'E2']
 
@@ -155,9 +156,11 @@ class NovaFrame(Frame):
     def create_widgets(self):
         Label(self, text="Selecione o que você quer inserir").pack(side="top", pady=15)
         self.inputvalue = StringVar()
+        options = list(MODEL_OPTIONS.values())[:-2]
+        options.extend(['ASSISTE', 'NARRA', 'APITA', 'JOGA CONTRA'])
         self.input = Combobox(self, exportselection=True,
                               justify='left', height=6,
-                              state='readonly', values=list(MODEL_OPTIONS.values())[:-2],
+                              state='readonly', values=options,
                               textvariable=self.inputvalue)
         self.input.pack(fill='x', padx=15)
         Button(self, text='Inserir', command=self.insert).pack()
@@ -168,10 +171,63 @@ class NovaFrame(Frame):
         insertwin = Toplevel()
         insertwin.wm_title('Inserir')
         insertframe = Frame(insertwin)
-        self.insertinfo = StringVar()
-        Label(insertframe, text="Coloque aqui informações extas").pack(padx=15, pady=15)
-        Entry(insertframe, textvariable=self.insertinfo).pack()
-        Button(insertframe, text="Salvar", command=insertwin.destroy).pack(pady=15)
+        error = False
+        if self.inputvalue.get() == MODEL_OPTIONS['torcedor']:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Inserindo um torcedor").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == MODEL_OPTIONS['comentarista']:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Inserindo um comentarista").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == MODEL_OPTIONS['arbitro']:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Inserindo um árbitro").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == MODEL_OPTIONS['time']:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Inserindo um time").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == MODEL_OPTIONS['estadio']:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Inserindo um árbitro").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == MODEL_OPTIONS['tecnico']:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Inserindo um técnico").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == MODEL_OPTIONS['jogador']:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Inserindo um jogador").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == MODEL_OPTIONS['partida']:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Inserindo uma partida").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == 'ASSISTE':
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Relacionando um torcedor com uma partida").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == 'NARRA':
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Relacionando um narrador com uma partida").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == 'APITA':
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Relacionando um árbitro com uma partida").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        elif self.inputvalue.get() == 'JOGA CONTRA':
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Relacionando times com times").pack(padx=15, pady=15)
+            Entry(insertframe, textvariable=self.insertinfo).pack()
+        else:
+            self.insertinfo = StringVar()
+            Label(insertframe, text="Selecione um modelo válido").pack(padx=15, pady=15)
+            error = True
+        if error is True:
+            Button(insertframe, text="Voltar", command=insertwin.destroy).pack(pady=15)
+        else:
+            Button(insertframe, text="Salvar", command=insertwin.destroy).pack(pady=15)
         insertframe.pack()
 
     def update(self):
