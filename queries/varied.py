@@ -112,9 +112,9 @@ def get_arbitro_mais_de_3_bandeirinha():
       FROM arbitro
       INNER JOIN apita ON arbitro.num_ID = apita.num_ID AND arbitro.tipo_ID = apita.tipo_ID AND arbitro.pais = apita.pais
       GROUP BY num_ID,tipo_ID
-      WHERE count(num_ID,tipo_ID)>3 AND funcao=bandeirinha
+      WHERE count(num_ID,tipo_ID)>3 AND funcao={funcao}
     """
-    sql_cmd = format_str.format()
+    sql_cmd = format_str.format(funcao='Bandeirinha')
     return sql_cmd
 
 
