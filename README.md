@@ -16,6 +16,15 @@ O app está sendo desenvolvido utilizando o Tkinter, um módulo de python para e
 ambientes gráficos usando Tk/Tcl.
 ## IMPORTANTE:
 Desenvolver o projeto utilizando a [Git Workflow](https://guides.github.com/introduction/flow/) 
+
+### Uso
+Queries simples estao no pacote `queries`. Usar fazendo `import` statements.
+
+Podemos acessar as queries simples no pacote `queries.simple`. Usar fazendo `from queries import simple` statement.
+
+Para cada db temos acesso as suas funcoes por `queries.simple.jogador`. Usar fazendo 
+`from queries.simple.jogador import get_time` statement para a funcao `get_time` da tabela jogador.
+
 ### Resumo:
 * **NUNCA** faça commits diretamente na `master` ela é sagrada
 * Novas features são implementadas em `feature-branches` 
