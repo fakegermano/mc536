@@ -1,4 +1,3 @@
-# TODO(rodrigograca): verificar se esta correto
 def get_times_contra(qpais):
     """
     Funcao que retorna string com sql query para todos os times que um time joga contra
@@ -6,13 +5,13 @@ def get_times_contra(qpais):
     :return: str
     """
     format_str = """
-    SELECT pais1
+    SELECT "pais1" as "Adversarios"
     FROM partida
-    WHERE pais2={pais}
+    WHERE "pais2"={pais}
       UNION
-    SELECT pais2
+    SELECT "pais2"
     FROM partida
-    WHERE pais1={pais}
+    WHERE "pais1"={pais}
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd
@@ -27,7 +26,7 @@ def get_tecnico(qpais):
     format_str = """
       SELECT *
       FROM tecnico
-      WHERE pais={pais}
+      WHERE "pais"={pais}
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd
@@ -40,9 +39,9 @@ def get_jogadores(qpais):
     :return: str
     """
     format_str = """
-      SELECT n_id,tipo_doc,pais
+      SELECT "num_ID","tipo_ID","pais"
       FROM jogador
-      WHERE pais={pais}
+      WHERE "pais"={pais}
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd
@@ -55,9 +54,9 @@ def get_torcedores(qpais):
     :return: str
     """
     format_str = """
-      SELECT n_id,tipo_doc,pais
+      SELECT "num_ID","tipo_ID","pais"
       FROM torcepara
-      WHERE pais={pais}
+      WHERE "torce_pais"={pais}
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd
@@ -72,5 +71,5 @@ def get_all():
     format_str = """
       SELECT * FROM time_futebol
     """
-    sql_cmd = format_str.format(pais=qpais)
+    sql_cmd = format_str.format()
     return sql_cmd
