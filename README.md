@@ -20,8 +20,8 @@ Desenvolver o projeto utilizando a [Git Workflow](https://guides.github.com/intr
 * **NUNCA** faça commits diretamente na `master` ela é sagrada
 * Novas features são implementadas em `feature-branches` 
 * Após concluir uma feature, abra um **Pull Request** da sua branch com a `master`
-** **Code Reviews** antes de aceitar qualquer Pull Request são obrigatórias.
-** Teste exaustivamente o funcionamento da sua branch.
-*** Garanta que sua `feature-branch` consiga ser mergeada na `master`
-*** Garanta que sua `feature-branch` não quebre funcionalidades da `master`
+  * **Code Reviews** antes de aceitar qualquer Pull Request são obrigatórias.
+  * Teste exaustivamente o funcionamento da sua branch.
+    * Garanta que sua `feature-branch` consiga ser mergeada na `master`
+    * Garanta que sua `feature-branch` não quebre funcionalidades da `master`
 * Confirme o pull request para fazer o merge da sua branch com a `master`
