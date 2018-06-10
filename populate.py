@@ -1,5 +1,5 @@
 from random import sample, randint
-import os
+import os, sys
 num_torcedores = 1000
 num_comentaristas = 380
 num_arbitros = 36
@@ -15,8 +15,6 @@ num_apita = 256
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 src_dir = os.path.join(base_dir, 'db_src')
-print(base_dir)
-print(src_dir)
 #############################################
 #
 #    Leitura de arquivos
@@ -100,8 +98,10 @@ for i in range(0, len(placar_partidas)):
 #    Abertura do arquivo
 # 
 ############################################
-
-destfile = open(os.path.join(base_dir, "p.sql"), "w")
+destname = sys.argv[1]
+if destname is None:
+    destname = 'p.sql'
+destfile = open(os.path.join(base_dir, destname), "w")
 
 #############################################
 #
@@ -117,7 +117,7 @@ for i in range(0, num_times_de_futebol):
     times_futebol.append(time_futebol)
 
 for t in times_futebol:
-    line = "INSERT INTO time_futebol VALUES (\"" + "\", \"".join(t) + "\")\n"
+    line = "INSERT INTO time_futebol VALUES (\'" + "\', \'".join(t) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -138,7 +138,7 @@ for i in range(0, num_torcedores):
     torcedores.append(person)
 
 for t in torcedores:
-    line = "INSERT INTO torcedor VALUES (\"" + "\", \"".join(t) + "\")\n"
+    line = "INSERT INTO torcedor VALUES (\'" + "\', \'".join(t) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -159,7 +159,7 @@ for i in range(0, num_comentaristas):
     comentaristas.append(comentarista)
 
 for c in comentaristas:
-    line = "INSERT INTO comentarista VALUES (\"" + "\", \"".join(c) + "\")\n"
+    line = "INSERT INTO comentarista VALUES (\'" + "\', \'".join(c) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -180,7 +180,7 @@ for i in range(0, num_arbitros):
     arbitros.append(arbitro)
 
 for a in arbitros:
-    line = "INSERT INTO arbitro VALUES (\"" + "\", \"".join(a) + "\")\n"
+    line = "INSERT INTO arbitro VALUES (\'" + "\', \'".join(a) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -199,7 +199,7 @@ for i in range(0, num_estadios):
     estadios.append(estadio)
 
 for e in estadios:
-    line = "INSERT INTO estadio VALUES (\"" + "\", \"".join(e) + "\")\n"
+    line = "INSERT INTO estadio VALUES (\'" + "\', \'".join(e) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -252,19 +252,19 @@ for i in range(0, num_times_de_futebol):  # len(teams)
             jogadores_ataque.append(jogador_ataque)
 
 for j in jogadores:
-    line = "INSERT INTO jogador VALUES (\"" + "\", \"".join(j) + "\")\n"
+    line = "INSERT INTO jogador VALUES (\'" + "\', \'".join(j) + "\');\n"
     destfile.write(line)
 
 for j in jogadores_ataque:
-    line = "INSERT INTO jogador_defesa VALUES (\"" + "\", \"".join(j) + "\")\n"
+    line = "INSERT INTO jogador_defesa VALUES (\'" + "\', \'".join(j) + "\');\n"
     destfile.write(line)
 
 for j in jogadores_defesa:
-    line = "INSERT INTO jogador_ataque VALUES (\"" + "\", \"".join(j) + "\")\n"
+    line = "INSERT INTO jogador_ataque VALUES (\'" + "\', \'".join(j) + "\');\n"
     destfile.write(line)
 
 for t in tecnicos:
-    line = "INSERT INTO tecnico VALUES (\"" + "\", \"".join(t) + "\")\n"
+    line = "INSERT INTO tecnico VALUES (\'" + "\', \'".join(t) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -286,7 +286,7 @@ for i in range(0, num_partidas):
     partidas.append(partida)
 
 for p in partidas:
-    line = "INSERT INTO partida VALUES (\"" + "\", \"".join(p) + "\")\n"
+    line = "INSERT INTO partida VALUES (\'" + "\', \'".join(p) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -309,7 +309,7 @@ for j in range(0, num_partidas):
         assiste.append(assiste_temp)
 
 for a in assiste:
-    line = "INSERT INTO assiste VALUES (\"" + "\", \"".join(a) + "\")\n"
+    line = "INSERT INTO assiste VALUES (\'" + "\', \'".join(a) + "\');\n"
     destfile.write(line)
 
 
@@ -333,7 +333,7 @@ for j in range(0, num_partidas):
         narra.append(narra_temp)
 
 for n in narra:
-    line = "INSERT INTO narra VALUES (\"" + "\", \"".join(n) + "\")\n"
+    line = "INSERT INTO narra VALUES (\'" + "\', \'".join(n) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -356,7 +356,7 @@ for j in range(0, num_partidas):
         apita.append(apita_temp)
 
 for a in apita:
-    line = "INSERT INTO apita VALUES (\"" + "\", \"".join(a) + "\")\n"
+    line = "INSERT INTO apita VALUES (\'" + "\', \'".join(a) + "\');\n"
     destfile.write(line)
 
 #############################################
@@ -365,14 +365,14 @@ for a in apita:
 # 
 ############################################
 
-joga_contra = []
-for i in range(0, len(pais1_partidas)):
-    joga_contra_temp = [pais1_partidas[i], pais2_partidas[i]]
-    joga_contra.append(joga_contra_temp)
+#joga_contra = []
+#for i in range(0, len(pais1_partidas)):
+#    joga_contra_temp = [pais1_partidas[i], pais2_partidas[i]]
+#    joga_contra.append(joga_contra_temp)
 
-for j in joga_contra:
-    line = "INSERT INTO joga_contra VALUES (\"" + "\", \"".join(j) + "\")\n"
-    destfile.write(line)
+#for j in joga_contra:
+#    line = "INSERT INTO joga_contra VALUES (\'" + "\', \'".join(j) + "\');\n"
+#    destfile.write(line)
 
 #############################################
 #
