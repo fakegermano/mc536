@@ -129,13 +129,15 @@ def get_arbitro_mais_de_3_bandeirinha():
     return sql_cmd
 
 
-# FIXME(fakegermano) query completamente confusa, nao consegui testar e nem confirmar como pode estar correto
+# FIXME(fakegermano) acredito que essa query agora funcione. nao temos times com formacao 4-4-3 no bd
+# mas testei com 5-3-2 e funcionou (95 resultados aparentemente corretos)
 def get_comentaristas_narraram_partidas_4_4_3():
     format_str = """
-      SELECT TN.num_ID, TN.tipo_ID, TN.pais, TN.formacao as formacao1, T2.formacao as formacao2
-      FROM (narra as N inner join time_futebol as T1 on N.pais1 = T1.pais as pais1) as TN 
-        INNER JOIN time_futebol as T2 on TN.pais2 = T2.pais as pais2
-      WHERE formacao1 = {formacao} OR formacao2 = {formacao}
+      SELECT N."num_ID", N."tipo_ID", N."pais"
+        FROM narra AS N INNER JOIN time_futebol AS tf1 ON N."pais1"=tf1."pais"
+                        INNER JOIN time_futebol AS tf2 ON N."pais2"=tf2."pais" 
+      WHERE tf1."formacao"={formacao} OR tf2."formacao"={formacao} 
+      GROUP BY tf1."pais", tf2."pais", N."num_ID", N."tipo_ID", N."pais";
     """
     sql_cmd = format_str.format(formacao="4-4-3")
     return sql_cmd
