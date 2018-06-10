@@ -10,7 +10,7 @@ def get_partidas(qcidade, qestado):
       FROM realizadano
       INNER JOIN (  SELECT *
                     FROM estadio 
-                    WHERE cidade=\"{cidade}\" AND estado=\"{estado}\" 
+                    WHERE cidade={cidade} AND estado={estado} 
                   ) ON cidade.estadio=cidade.realizadano AND estado.estadio=estado.realizadano
     """
     sql_cmd = format_str.format(cidade=qcidade, estado=qestado)

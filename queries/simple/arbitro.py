@@ -11,7 +11,7 @@ def get_partidas(qn_id, qtipo_doc, qpais):
     format_str = """
       SELECT pais1,pais2,rodada
       FROM apita
-      WHERE n_id=\"{n_id}\" AND tipo_doc=\"{tipo_doc}\" AND pais=\"{pais}\"
+      WHERE n_id={n_id} AND tipo_doc={tipo_doc} AND pais={pais}
     """
     sql_cmd = format_str.format(n_id=qn_id, tipo_doc=qtipo_doc, pais=qpais)
     return sql_cmd

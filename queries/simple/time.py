@@ -8,11 +8,11 @@ def get_times_contra(qpais):
     format_str = """
     SELECT pais1
     FROM partida
-    WHERE pais2=\"{pais}\"
+    WHERE pais2={pais}
       UNION
     SELECT pais2
     FROM partida
-    WHERE pais1=\"{pais}\"
+    WHERE pais1={pais}
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd
@@ -27,7 +27,7 @@ def get_tecnico(qpais):
     format_str = """
       SELECT *
       FROM tecnico
-      WHERE pais=\"{pais}\"
+      WHERE pais={pais}
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd
@@ -42,7 +42,7 @@ def get_jogadores(qpais):
     format_str = """
       SELECT n_id,tipo_doc,pais
       FROM jogador
-      WHERE pais=\"{pais}\"
+      WHERE pais={pais}
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd
@@ -57,7 +57,7 @@ def get_torcedores(qpais):
     format_str = """
       SELECT n_id,tipo_doc,pais
       FROM torcepara
-      WHERE pais=\"{pais}\"
+      WHERE pais={pais}
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd

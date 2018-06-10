@@ -9,7 +9,7 @@ def get_estadio(qpaisA, qpaisB, qrodada):
     format_str = """
       SELECT nome,cidade,capacidade 
       FROM realizadano
-      WHERE pais1=\"{paisA}\" AND pais2=\"{paisB}\" AND RODADA=\"{rodada}\"
+      WHERE pais1={paisA} AND pais2={paisB} AND RODADA={rodada}
     """
     sql_cmd = format_str.format(paisA=qpaisA, paisB=qpaisB, rodada=qrodada)
     return sql_cmd
@@ -26,7 +26,7 @@ def get_arbitro(qpaisA, qpaisB, qrodada):
     format_str = """
       SELECT n_id,tipo_doc,pais
       FROM apita
-      WHERE pais1=\"{paisA}\" AND pais2=\"{paisB}\" AND RODADA=\"{rodada}\"
+      WHERE pais1={paisA} AND pais2={paisB} AND RODADA={rodada}
     """
     sql_cmd = format_str.format(paisA=qpaisA, paisB=qpaisB, rodada=qrodada)
     return sql_cmd
@@ -43,7 +43,7 @@ def get_comentarista(qpaisA, qpaisB, qrodada):
     format_str = """
       SELECT n_id,tipo_doc,pais
       FROM narra
-      WHERE pais1=\"{paisA}\" AND pais2=\"{paisB}\" AND RODADA=\"{rodada}\"
+      WHERE pais1={paisA} AND pais2={paisB} AND RODADA={rodada}
     """
     sql_cmd = format_str.format(paisA=qpaisA, paisB=qpaisB, rodada=qrodada)
     return sql_cmd
@@ -60,7 +60,7 @@ def get_torcedores(qpaisA, qpaisB, qrodada):
     format_str = """
       SELECT n_id,tipo_doc,pais
       FROM assiste
-      WHERE pais1=\"{paisA}\" AND pais2=\"{paisB}\" AND RODADA=\"{rodada}\"
+      WHERE pais1={paisA} AND pais2={paisB} AND RODADA={rodada}
     """
     sql_cmd = format_str.format(paisA=qpaisA, paisB=qpaisB, rodada=qrodada)
     return sql_cmd
@@ -76,7 +76,7 @@ def get_paises(qpaisA, qpaisB):
     format_str = """
       SELECT pais1,pais2
       FROM jogacontra
-      WHERE pais1=\"{paisA}\" AND pais2=\"{paisB}\" 
+      WHERE pais1={paisA} AND pais2={paisB} 
     """
     sql_cmd = format_str.format(paisA=qpaisA, paisB=qpaisB)
     return sql_cmd

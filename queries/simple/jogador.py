@@ -6,7 +6,7 @@ def get_time(qn_id, qtipo_doc, qpais):
     format_str = """
     SELECT pais
     FROM jogador
-    WHERE n_id=\"{n_id}\" AND tipo_doc=\"{tipo_doc}\" AND pais=\"{pais}\"
+    WHERE n_id={n_id} AND tipo_doc={tipo_doc} AND pais={pais}
     """
     sql_cmd = format_str.format(n_id=qn_id, tipo_doc=qtipo_doc, pais=qpais)
     return sql_cmd
@@ -27,7 +27,7 @@ def get_tecnico(qn_id, qtipo_doc, qpais):
       INNER JOIN (
         SELECT pais
         FROM jogador
-        WHERE n_id=\"{n_id}\" AND tipo_doc=\"{tipo_doc}\" AND pais=\"{pais}\"
+        WHERE n_id={n_id} AND tipo_doc={tipo_doc} AND pais={pais}
       ) ON pais.jogador=pais.tecnico
     """
     sql_cmd = format_str.format(n_id=qn_id, tipo_doc=qtipo_doc, pais=qpais)
