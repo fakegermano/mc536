@@ -3,11 +3,11 @@
 # TODO(rodrigograca): se o pais do tecnico eh o time que ele torce (?)
 # TODO(fixme): so retornar o qpais tambem eh solucao?
 # FIXME(fakegermano): remover atributos nao usados
-def get_time(qn_id, qtipo_doc, qpais):
+def get_time(qnum_ID, qtipo_ID, qpais):
     """
     Funcao que retorna string com a sql query para o time que o tecnico treina
-    :param qn_id: int
-    :param qtipo_doc: str
+    :param qnum_ID: int
+    :param qtipo_ID: str
     :param qpais: str
     :return: str
     """
@@ -21,22 +21,22 @@ def get_time(qn_id, qtipo_doc, qpais):
 
 
 # FIXME(fakegermano): remover atributos nao usados
-def get_jogadores(qn_id, qtipo_doc, qpais):
+def get_jogadores(qnum_ID, qtipo_ID, qpais):
     """
     Funcao que retorna string com a sql query para os jogadores que o tecnico treina
-    :param qn_id: int
-    :param qtipo_doc: str
+    :param qnum_ID: int
+    :param qtipo_ID: str
     :param qpais: str
     :return: str
     """
     format_str = """
-      SELECT n_id,tipo_doc,pais
+      SELECT "num_ID","tipo_ID","pais"
       FROM jogador
       INNER JOIN (
         SELECT pais
         FROM tecnico
-        WHERE pais={pais}
-      ) ON pais.jogador=pais.tecnico
+        WHERE "pais"={pais}
+      ) AS tecnico ON jogador."pais"=tecnico."pais"
     """
     sql_cmd = format_str.format(pais=qpais)
     return sql_cmd
