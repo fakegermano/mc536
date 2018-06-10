@@ -2,22 +2,22 @@
 
 # TODO(rodrigo): assume que pais eh o time (?)
 # FIXME(fakegermano): se tem qpais, eh so retornar qpais
-def get_time(qn_id, qtipo_doc, qpais):
+def get_time(qnum_ID, qtipo_ID, qpais):
     format_str = """
-    SELECT pais
+    SELECT "pais"
     FROM jogador
-    WHERE n_id={n_id} AND tipo_doc={tipo_doc} AND pais={pais}
+    WHERE "num_ID"={num_ID} AND "tipo_ID"={tipo_ID} AND "pais"={pais}
     """
-    sql_cmd = format_str.format(n_id=qn_id, tipo_doc=qtipo_doc, pais=qpais)
+    sql_cmd = format_str.format(num_ID=qnum_ID, tipo_ID=qtipo_ID, pais=qpais)
     return sql_cmd
 
 
-# FIXME(fakegermano): se tenho qpais nao precisa da query pra pegar o pais
-def get_tecnico(qn_id, qtipo_doc, qpais):
+# FIXME(fakegermano): query funciona mas retorna uma coluna a mais com o pais repetido
+def get_tecnico(qnum_ID, qtipo_ID, qpais):
     """
     Funcao que retorna uma string com a sql query para o tecnico que treina o jogador
-    :param qn_id: int
-    :param qtipo_doc: str
+    :param qnum_ID: int
+    :param qtipo_ID: str
     :param qpais: str
     :return: str
     """
@@ -27,10 +27,10 @@ def get_tecnico(qn_id, qtipo_doc, qpais):
       INNER JOIN (
         SELECT pais
         FROM jogador
-        WHERE n_id={n_id} AND tipo_doc={tipo_doc} AND pais={pais}
-      ) ON pais.jogador=pais.tecnico
+        WHERE "num_ID"={num_ID} AND "tipo_ID"={tipo_ID} AND "pais"={pais}
+      ) ON jogador."pais"=tecnico."pais"
     """
-    sql_cmd = format_str.format(n_id=qn_id, tipo_doc=qtipo_doc, pais=qpais)
+    sql_cmd = format_str.format(num_ID=qnum_ID, tipo_ID=qtipo_ID, pais=qpais)
     return sql_cmd
 
 
