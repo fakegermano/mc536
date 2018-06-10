@@ -1,0 +1,308 @@
+_______________Estádio__________________________________________________
+INPUT:  cidade=A;
+	estado=B;	
+
+1) Partidos realizados em determinado estádio
+
+SELECT 
+	pais1, pais2, rodada 
+FROM 
+	realizadano
+INNER JOIN
+(
+SELECT *
+FROM 
+	estadio
+WHERE 
+	cidade= A AND estado= B
+)
+ON 
+	cidade.estadio=cidade.realizadano 
+AND
+	estado.estadio=estado.realizadano
+
+2) Estadios participantes na Copa
+
+»»»»»Questão
+- Assume-se que todos os estádios que estão na base de dados pertecem à Copa
+SELECT 
+	*
+FROM
+	estadio
+
+______________Partido__________________________________________________
+INPUT:  pais1=A;
+	pais2=B;
+	rodada=C;
+
+3)Estádio onde o partido foi realizado 
+
+SELECT
+	nome,cidade,capacidade
+FROM
+	realizadano
+Where 
+	pais1=A AND pais2=B AND RODADA=C
+
+4) Árbitros apitando o partido
+
+SELECT
+	n_id,tipo_doc,pais
+FROM
+	apita
+Where 
+	pais1=A AND pais2=B AND RODADA=C
+
+5) Comentaristas narrando o partido
+
+SELECT
+	n_id,tipo_doc,pais
+FROM
+	narra
+Where 
+	pais1=A AND pais2=B AND RODADA=C
+
+6) Torcedores presentes no partido
+
+SELECT
+	n_id,tipo_doc,pais
+FROM
+	assiste
+Where 
+	pais1=A AND pais2=B AND RODADA=C
+
+7) Times jogando a partida
+
+SELECT
+	pais1,pais2
+FROM
+	jogacontra
+Where 
+	pais1=A AND pais2=B 
+
+8) Partidos realizados na Copa
+
+»»»»»Questão
+- Assume-se que todos os partidos que estão na base de dados pertecem à Copa?
+SELECT 
+	*
+FROM
+	partida
+
+__________Time de Futebol____________________________________________
+INPUT: Pais=A
+
+
+9) Times contra quem jogou 
+»»»»»Confirmar se funciona (ou nao)
+
+SELECT
+	pais1
+FROM
+	partida
+WHERE
+	pais2=A
+
+UNION
+
+SELECT 
+	pais2
+FROM
+	partida
+WHERE
+	pais1=A
+
+10) Técnico do time
+
+SELECT
+	*
+FROM 
+	tecnico
+Where
+	pais=A
+
+11) Jogadores do time
+
+SELECT
+	n_id,tipo_doc,pais
+FROM
+	jogador
+WHERE
+	pais=A
+
+12) Torcedores do time
+
+SELECT
+	n_id,tipo_doc,pais
+FROM
+	torcepara
+WHERE 
+	pais=A
+
+13) Times participando na Copa
+
+»»»»»Questão Habitual
+SELECT 
+	*
+FROM
+	time
+_____________Técnico_____________________________________________________
+INPUT:  n_id=XX
+	tipo_doc=B
+	pais=C
+
+14) Time que participa
+»»»Qual é a relação entre tecnico e time? 
+o país do técnico => time??
+»»»Assumindo que sim, ou seja, que o país do técnico indica o time
+
+SELECT
+	pais
+FROM
+	tecnico
+WHERE
+	pais=C
+
+15) Jogadores que treina
+
+SELECT
+	n_id,tipo_doc,pais
+FROM
+	jogador
+INNER JOIN
+(
+SELECT 
+	pais
+FROM 
+	tecnico
+WHERE
+	pais=C
+)
+ON
+	pais.jogador=pais.tecnico
+
+16)´Técnicos na Copa
+»»»»»Questão habitual
+SELECT 
+	*
+FROM
+	tecnico
+
+______________Árbitro__________________________________________________________
+INPUT:  n_id=XX
+	tipo_doc=B
+	pais=C
+
+17) Partidas que apita
+SELECT
+	pais1,pais2,rodada
+FROM
+	apita
+WHERE
+	n_id=XX AND tipo_doc=B AND pais=C
+
+18) Árbitros na Copa
+»»»»»»Questão habitual
+
+SELECT 
+	*
+FROM
+	arbitro
+_____________Jogador__________________________________________________________
+INPUT:  n_id=XX
+	tipo_doc=B
+	pais=C
+
+19) Time que participa
+»»»»Questão semelhante à 14
+
+Assumindo que pais=> time
+
+SELECT
+	pais
+FROM
+	jogador
+WHERE
+	n_id=XX AND tipo_doc=B AND pais=C
+
+20) Técnico que treina
+
+SELECT
+	*
+FROM
+	tecnico
+INNER JOIN
+(
+SELECT
+	pais
+FROM
+	jogador
+WHERE
+	n_id=XX AND tipo_doc=B AND pais=C
+)
+ON
+	pais.jogador=pais.tecnico
+
+
+21)Jogadores na Copa
+»»»»»»Questão habitual
+SELECT 
+	*
+FROM
+	jogador
+
+______________Torcedor______________________________________________________
+INPUT:  n_id=XX
+	tipo_doc=B
+	pais=C
+
+22) Time que torce
+
+SELECT
+	pais'
+FROM
+	torcepara
+WHERE 
+	n_id=XX AND tipo_doc=B AND pais=C
+
+23)Partidas que assistiu
+SELECT
+	pais1,pais2,rodada
+FROM
+	assiste
+WHERE
+	n_id=XX AND tipo_doc=B AND pais=C
+
+
+24) Torcedores na Copa
+»»»»»»Questão habitual
+
+SELECT 
+	*
+FROM
+	torcedor
+
+___________________Comentarista________________________________________
+INPUT:  n_id=XX
+	tipo_doc=B
+	pais=C
+
+25) Partidas que narrou
+
+SELECT
+	pais1,pais2,rodada
+FROM
+	narra
+WHERE
+	n_id=XX AND tipo_doc=B AND pais=C
+
+26) Cmentaristas na Copa
+
+SELECT 
+	*
+FROM
+	comentarista
+
+
+
+
