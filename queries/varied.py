@@ -30,38 +30,44 @@ def get_defesa_sem_cartao():
     return sql_cmd
 
 
-# FIXME (fakegermano) : Funcao count nao funciona com 3 argumentos
+# FIXME (fakegermano) : Query funcional mas todas as partidas que temos tem 23 torcedores
 def get_partida_menos_2000_assistiram():
     format_str = """
-      SELECT "pais1", "pais2", "rodada", count("pais1", "pais2", "rodada") as "num_torcedores"
-      FROM assiste
-      WHERE "num_torcedores" > 2000
-      GROUP BY "pais1", "pais2", "rodada";
+      SELECT * FROM (
+        SELECT "pais1", "pais2", "rodada", count("num_ID") as num_torcedores
+        FROM assiste
+        GROUP BY "pais1", "pais2", "rodada"
+      ) AS torcedores_contados
+      WHERE torcedores_contados.num_torcedores < 2000
+      ORDER BY "rodada"
     """
     sql_cmd = format_str.format()
     return sql_cmd
 
 
 # TODO(fakegermano): Esta query retorna a cidade/estado com menos de 2 partidas e nao o estadio
-# FIXME(fakegermano): funcao count nao funciona com 2 argumentos
 def get_estadio_menos_2_partidas():
     format_str = """
-      SELECT cidade,estado,count(cidade,estado) as num_partidas
-      FROM partida
-      WHERE num_partidas > 2
-      GROUP BY cidade,estado;
+      SELECT * FROM (
+        SELECT cidade,estado,count(cidade) as num_partidas
+        FROM partida
+        GROUP BY cidade,estado
+      ) AS partidas_contadas
+      WHERE partidas_contadas."num_partidas" < 2
     """
     sql_cmd = format_str.format()
     return sql_cmd
 
 
-# FIXME(fakegermano): E.pais1, E.pais2 e E.rodada nao existem
 def get_estadio_arbitro_brasileiro_apita():
     format_str = """
-      SELECT *
-      FROM estadio AS E
-        INNER JOIN apita AS A ON E."pais1"=A."pais1" AND E."pais2"=A."pais2" AND E."rodada"=A."rodada";
-      WHERE "pais"={pais}
+      SELECT cidade,estado
+FROM partida
+INNER JOIN ( SELECT "pais1","pais2",rodada
+FROM apita
+WHERE "pais"={pais}
+)AS aux ON partida."pais1"=aux."pais1" AND partida."pais2"=aux."pais2" AND partida."rodada"=aux."rodada"
+GROUP BY cidade, estado
     """
     sql_cmd = format_str.format(pais='Brazil')
     return sql_cmd

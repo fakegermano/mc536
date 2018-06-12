@@ -1,4 +1,3 @@
-# FIXME(fakegermano): Query nao funciona, realizadano nao eh relacao valida
 def get_partidas(qcidade, qestado):
     """
     Funcao que retorna uma string com a sql query para todas as partidas que ocorreram no estadio
@@ -7,12 +6,9 @@ def get_partidas(qcidade, qestado):
     :return: str
     """
     format_str = """
-      SELECT "pais1", "pais2" 
-      FROM realizadano
-      INNER JOIN (  SELECT *
-                    FROM estadio 
-                    WHERE "cidade"={cidade} AND "estado"={estado} 
-                  ) ON estadio."cidade"=realizadano."cidade" AND estadio."estado"=realizadano."estado"
+      SELECT "pais1","pais2","rodada"
+      FROM partida
+      WHERE "cidade"={cidade} AND "estado"={estado}
     """
     sql_cmd = format_str.format(cidade=qcidade, estado=qestado)
     return sql_cmd

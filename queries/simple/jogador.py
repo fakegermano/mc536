@@ -11,7 +11,6 @@ def get_time(qnum_ID, qtipo_ID, qpais):
     return sql_cmd
 
 
-# FIXME(fakegermano): query funciona mas retorna uma coluna a mais com o pais repetido
 def get_tecnico(qnum_ID, qtipo_ID, qpais):
     """
     Funcao que retorna uma string com a sql query para o tecnico que treina o jogador
@@ -21,7 +20,7 @@ def get_tecnico(qnum_ID, qtipo_ID, qpais):
     :return: str
     """
     format_str = """
-      SELECT *
+      SELECT "num_ID", "tipo_ID",tecnico."pais"
       FROM tecnico
       INNER JOIN (
         SELECT pais

@@ -1,4 +1,3 @@
-# FIXME(fakegermano) Query invalida, realizadano nao existe
 def get_estadio(qpaisA, qpaisB, qrodada):
     """
     Funcao que retorna string com a sql query para o estadio da partida
@@ -8,9 +7,13 @@ def get_estadio(qpaisA, qpaisB, qrodada):
     :return: str
     """
     format_str = """
-      SELECT "nome","cidade","capacidade" 
-      FROM realizadano
-      WHERE "pais1"={paisA} AND "pais2"={paisB} AND "rodada"={rodada}
+    SELECT realizadano."cidade",realizadano."estado", "nome"
+      FROM estadio
+      INNER JOIN ( SELECT "cidade","estado"
+          FROM partida
+          WHERE "pais1"={paisA} AND "pais2"={paisB} AND "rodada"={rodada}
+          )AS realizadano ON estadio."cidade"=realizadano."cidade" AND estadio."estado"=realizadano."estado"
+
     """
     sql_cmd = format_str.format(paisA=qpaisA, paisB=qpaisB, rodada=qrodada)
     return sql_cmd
