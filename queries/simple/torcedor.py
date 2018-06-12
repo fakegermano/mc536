@@ -32,7 +32,6 @@ def get_partidas_assistidas(qnum_ID, qtipo_ID, qpais):
     return sql_cmd
 
 
-# TODO(rodrigograca): assume que todos os torcedores no bd estao nao copa (?)
 def get_all():
     """
     Funcao que retorna string com sql query para todos os torcedores da copa

@@ -18,7 +18,6 @@ def get_partidas(qcidade, qestado):
     return sql_cmd
 
 
-# TODO(rodrigograca): assume que todos os estadios cadastrados estao na copa?
 def get_all():
     """
     Funcao que retorna uma string com a sql query para todos os estadios da copa

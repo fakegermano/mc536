@@ -17,7 +17,6 @@ def get_partidas(qnum_ID, qtipo_ID, qpais):
     return sql_cmd
 
 
-# TODO(rodrigograca): assume que todos os arbitros cadastrados estao na copa (?)
 def get_all():
     """
     Retorna uma string com a query sql para todos os arbitros da copa

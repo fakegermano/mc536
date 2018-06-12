@@ -62,7 +62,6 @@ def get_torcedores(qpais):
     return sql_cmd
 
 
-# TODO(rodrigograca): assume que todos os times cadastrados estao na copa?
 def get_all():
     """
     Funcao que retorna string com sql query para todos os times da copa

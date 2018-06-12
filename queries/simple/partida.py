@@ -84,7 +84,6 @@ def get_paises(qpaisA, qpaisB):
     return sql_cmd
 
 
-# TODO(rodrigograca): assume que todos os objetos partida ocorrem na copa
 def get_all():
     """
     Funcao que retorna string com a sql query para todas as partidas da copa

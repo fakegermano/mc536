@@ -1,6 +1,5 @@
 
 
-# TODO(rodrigo): assume que pais eh o time (?)
 # FIXME(fakegermano): se tem qpais, eh so retornar qpais
 def get_time(qnum_ID, qtipo_ID, qpais):
     format_str = """
@@ -34,7 +33,6 @@ def get_tecnico(qnum_ID, qtipo_ID, qpais):
     return sql_cmd
 
 
-# TODO(rodrigograca): assume que os jogadores cadastrados todos fazem parte da copa (?)
 def get_all():
     """
     Funcao que retorna uma string com a sql query para todos os jogadores da copa
