@@ -8,5 +8,5 @@ Rostov-on-Don
 Samara
 Saransk
 Volgograd
-Moscow
+Moscow1
 Kaliningrad

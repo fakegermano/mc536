@@ -1,4 +1,0 @@
-Passport
-Driver's licence
-RG
-CPF
