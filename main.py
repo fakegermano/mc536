@@ -3,6 +3,8 @@ from tkinter.messagebox import showinfo
 
 from ttkthemes.themed_tk import *
 from tkinter.ttk import *
+import psycopg2
+
 
 MODEL_OPTIONS = {'estadio': 'ESTADIO',
                  'partida': 'PARTIDA',
