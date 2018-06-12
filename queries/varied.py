@@ -22,8 +22,9 @@ def get_torcedores_nao_assistiram_brasil():
 # FIXME(dgtravieso) pega jogadores de ataque e defesa.
 def get_defesa_sem_cartao():
     format_str = """
-      SELECT "num_ID","tipo_ID","pais"
+      SELECT jogador."num_ID",jogador."tipo_ID",jogador."pais"
       FROM jogador
+      INNER JOIN jogador_defesa ON jogador."num_ID"=jogador_defesa."num_ID" AND jogador."tipo_ID"=jogador_defesa."tipo_ID" AND jogador."pais"=jogador_defesa."pais"
       WHERE "cartoes_amarelos"=0 AND "cartoes_vermelhos"=0
     """
     sql_cmd = format_str.format(pais='Brazil')
